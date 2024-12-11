@@ -8,7 +8,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-LOGGLY_URL = "https://logs-01.loggly.com/inputs/YOUR_LOGGLY_CUSTOMER_TOKEN/tag/http/"
+LOGGLY_URL = "http://logs-01.loggly.com/inputs/bbdf6498-55d9-4642-8cce-67eaca20be35/tag/http/"
 HEADERS = {"Content-Type": "application/json"}
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s - %(message)s")
@@ -33,7 +33,7 @@ def send_log_to_loggly(email, timestamp):
     if response.status_code != 200:
         logging.error(f"Failed to send log to Loggly: {response.text}")
 
-REDIRECT_URL = "https://example.com"
+REDIRECT_URL = "https://www.talenthr.io"
 
 @app.route("/verify", methods=["GET"])
 def verify_click():
