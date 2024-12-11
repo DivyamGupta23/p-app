@@ -1,9 +1,8 @@
 import base64
-import uuid
-from flask import Flask, request, redirect
-import requests
 import logging
+import requests
 import sys
+from flask import Flask, request, redirect
 from datetime import datetime
 
 app = Flask(__name__)
@@ -13,17 +12,14 @@ HEADERS = {"Content-Type": "application/json"}
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s - %(message)s")
 
+# Decode the base64 email
 def decode_email(encoded_email):
-    # Decode the base64 email back to UUID bytes
-    padding = '=' * (4 - len(encoded_email) % 4)
-    decoded_bytes = base64.urlsafe_b64decode(encoded_email + padding)
-    
-    # Convert the UUID bytes back to UUID object
-    email_uuid = uuid.UUID(bytes=decoded_bytes)
-    
-    # Decode the UUID to original email (reverse UUID generation logic)
-    return str(email_uuid)
+    """Decode the URL-safe base64 encoded email."""
+    if not encoded_email:
+        raise ValueError("Encoded email cannot be empty")
+    return base64.urlsafe_b64decode(encoded_email.encode('utf-8')).decode('utf-8')
 
+# Send log data to Loggly
 def send_log_to_loggly(email, timestamp):
     log_data = {
         "email": email,
