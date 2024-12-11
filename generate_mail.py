@@ -1,11 +1,15 @@
-import base64
+BASE_URL = "https://p-app.onrender.com/track"
 
-def generate_tracking_link(email, base_url):
-    encoded_email = base64.urlsafe_b64encode(email.encode()).decode()
-    return f"{base_url}/r/{encoded_email}"
+def generate_tracking_url(email):
+    if not email:
+        raise ValueError("Email cannot be empty")
+    
+    # Append the email as a query parameter
+    tracking_url = f"{BASE_URL}?email={email}"
+    return tracking_url
 
-# Example usage
-email = "employee33@gmail.com"
-base_url = " https://7133-103-48-197-9.ngrok-free.app"  # Replace with your ngrok URL
-tracking_link = generate_tracking_link(email, base_url)
-print(tracking_link)
+if __name__ == "__main__":
+    # Example usage
+    test_email = "user@example.com"
+    tracking_url = generate_tracking_url(test_email)
+    print(f"Tracking URL: {tracking_url}")
